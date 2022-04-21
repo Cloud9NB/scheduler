@@ -10,5 +10,5 @@ export default function Confirm() {
         <Button danger>Confirm</Button>
       </section>
     </main>
-  )
-}
+  );
+};
