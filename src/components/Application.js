@@ -57,10 +57,10 @@ export default function Application(props) {
   useEffect(() => {
     const apiDays = `http://localhost:8001/api/days`
     axios.get(apiDays)
-    .then((response) => {
-      console.log('response: ', response.data);
-      setDays(response.data);
-      })
+      .then((response) => {
+        console.log('response: ', response.data);
+        setDays(response.data);
+        })
   }, []);
 
   return (
