@@ -9,12 +9,13 @@ export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
-    appointments: {}
+    appointments: {},
+    interviewers: {}
   });
   const setDay = day => setState({ ...state, day });
-  // const dailyAppointments = [];
-  const dailyAppointments = getAppointmentsForDay(state, state.day);
-  const appointment = dailyAppointments.map((appt) => {
+  const appointments = getAppointmentsForDay(state, state.day);
+  const schedule = appointments.map((appt) => {
+    console.log('appt', appt);
     return (
       <Appointment
         key={appt.id}
@@ -26,13 +27,15 @@ export default function Application(props) {
   useEffect(() => {
     const apiDays = 'http://localhost:8001/api/days';
     const apiAppointment = 'http://localhost:8001/api/appointments';
+    const apiInterview = 'http://localhost:8001/api/interviewers';
     Promise.all([
       axios.get(apiDays),
-      axios.get(apiAppointment)
+      axios.get(apiAppointment),
+      axios.get(apiInterview),
     ]).then((all) => {
       console.log('all: ', all);
       // setDays(response.data);
-      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data}))
+      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}))
     })
   }, []);
 
@@ -60,7 +63,7 @@ export default function Application(props) {
       />
       </section>
       <section className="schedule">
-        {appointment}
+        {schedule}
         <Appointment key="last" time="5pm" />
       </section>
     </main>
