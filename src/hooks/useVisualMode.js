@@ -22,7 +22,11 @@ export default function useVisualMode(initial) {
     const newHistory = [...history];
     newHistory.pop();
     setHistory(newHistory);
+    console.log('history:', history);
+    console.log('mode:', mode);
     if (history.length > 1) {
+      console.log('history2:', history);
+      console.log('mode2:', mode);
       setMode(newHistory[newHistory.length - 1]);
     } else {
       return history;
@@ -31,3 +35,4 @@ export default function useVisualMode(initial) {
   
   return { mode, transition, back };
 };
+
