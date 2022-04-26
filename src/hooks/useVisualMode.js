@@ -23,8 +23,6 @@ export default function useVisualMode(initial) {
     newHistory.pop();
     setHistory(newHistory);
     if (history.length > 1) {
-      console.log('history2:', history);
-      console.log('mode2:', mode);
       setMode(newHistory[newHistory.length - 1]);
     } else {
       return history;

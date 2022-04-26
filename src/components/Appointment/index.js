@@ -12,9 +12,10 @@ export default function Appointment (props) {
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
-  const SAVING = "SAVING";
-  const DELETING = "DELETING";
+  const SAVE = "SAVE";
+  const DELETE = "DELETE";
   const CONFIRM = "CONFIRM";
+  const EDIT = "EDIT";
   const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY);
 
   function save(name, interviewer) {
@@ -22,19 +23,23 @@ export default function Appointment (props) {
       student: name,
       interviewer
     };
-    transition(SAVING);
+    transition(SAVE);
     props.bookInterview(props.id, interview)
     .then(() => transition(SHOW));
   };
 
   function remove() {
     if (mode === CONFIRM) {
-      transition(DELETING);
+      transition(DELETE);
       props.cancelInterview(props.id)
       .then(() => transition(EMPTY))
     } else {
-      transition(CONFIRM);      
+      transition(CONFIRM);
     }
+  };
+
+  function edit() {
+    transition(EDIT);
   };
 
   return (
@@ -46,24 +51,34 @@ export default function Appointment (props) {
         student={props.interview.student}
         interviewer={props.interview.interviewer}
         onDelete={remove}
+        onEdit={edit}
       />
       )}
       {mode === CREATE &&
       <Form
-        // name={props.name}
-        // value={props.value}
+        name={props.name}
+        value={props.value}
         interviewers={props.interviewers}
-        // {props.interviewers}
         onSave={save}
         onCancel={back}
       />}
-      {mode === SAVING && <Status message="Saving"/>}
-      {mode === DELETING && <Status message="Deleting" />}
+      {mode === SAVE && <Status message="SAVING"/>}
+      {mode === DELETE && <Status message="Deleting" />}
       {mode === CONFIRM && 
         <Confirm 
           onCancel={back}
           onConfirm={remove}
           message="Are you sure you would like to delete?" 
+        />}
+        {mode === EDIT &&
+        <Form
+          // name={props.name ? props.name : props.interview.student}
+          // value={props.value ? props.value: props.interview.interviewer.id}
+          interviewer={props.interview.interviewer.id}
+          student={props.interview.student}
+          interviewers={props.interviewers}
+          onSave={save}
+          onCancel={back}
         />}
     </article>
   );
