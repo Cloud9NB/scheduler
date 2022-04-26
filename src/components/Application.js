@@ -33,7 +33,7 @@ export default function Application(props) {
       setState({...state, appointments});
       return res;
     })
-    .catch(err => console.log('err: ', err));
+    // .catch(err => console.log('err: ', err));
   };
 
   function cancelInterview(id) {
@@ -51,7 +51,7 @@ export default function Application(props) {
       setState({...state, appointments});
       return res;
     })
-    .catch(err => console.log('err: ', err));
+    // .catch(err => console.log('err: ', err));
   }
 
   const schedule = appointments.map((appt) => {
