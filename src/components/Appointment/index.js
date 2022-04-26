@@ -67,7 +67,7 @@ export default function Appointment (props) {
         onSave={save}
         onCancel={back}
       />}
-      {mode === SAVE && <Status message="SAVING"/>}
+      {mode === SAVE && <Status message="SAVING" />}
       {mode === DELETE && <Status message="Deleting" />}
       {mode === CONFIRM && 
         <Confirm 
