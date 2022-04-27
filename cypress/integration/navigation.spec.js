@@ -6,8 +6,10 @@ describe("Navigation", () => {
 
   it("should navigate to Tuesday", () => {
     cy.visit("/");
-    cy.get('ul > :nth-child(2)')
-      .click();
+    
+    cy.contains("li", "Tuesday")
+      .click()
+      .should("have.css", "background-color", "rgb(242, 242, 242)");
   });
 
 });
