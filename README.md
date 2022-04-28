@@ -17,11 +17,11 @@ For quality assurance, the project follows best practices of TDD (Test Driven De
 - Days display currently remaining spots and capture updates after each modification
 
 ### New appointment booking
-!['book-new-apt']()
+!['book-new-apt'](https://github.com/Cloud9NB/scheduler/blob/master/docs/screenshots/interview-booking.png?raw=true)
 _A user can add interviews to available slots by typing a student name and adding interviewer from the list (an error message will be shown if a student name field is left blank)._
 
 ### Interview cancelation
-!['cancel-apt-confirm-delete']()
+!['cancel-apt-confirm-delete'](https://github.com/Cloud9NB/scheduler/blob/master/docs/screenshots/confirm-delete.png?raw=true)
 _A user can cancel an existing appointment by pressing the delete icon and interacting with a warning message by pressing a confirm button._
 
 
