@@ -13,3 +13,6 @@
 node_modules/
 /view/node_modules/
 coverage/
+
+package-lock.json
+/view/package-lock.json
