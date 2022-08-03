@@ -1,25 +1,25 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
-const express = require("express");
-const bodyparser = require("body-parser");
-const helmet = require("helmet");
-const cors = require("cors");
+const express = require('express');
+const bodyparser = require('body-parser');
+const helmet = require('helmet');
+const cors = require('cors');
 
 const app = express();
 
-const db = require("./db");
+const db = require('./db');
 
-const days = require("./routes/days");
-const appointments = require("./routes/appointments");
-const interviewers = require("./routes/interviewers");
+const days = require('./routes/days');
+const appointments = require('./routes/appointments');
+const interviewers = require('./routes/interviewers');
 
 function read(file) {
   return new Promise((resolve, reject) => {
     fs.readFile(
       file,
       {
-        encoding: "utf-8"
+        encoding: 'utf-8',
       },
       (error, data) => {
         if (error) return reject(error);
@@ -37,22 +37,22 @@ module.exports = function application(
   app.use(helmet());
   app.use(bodyparser.json());
 
-  app.use("/api", days(db));
-  app.use("/api", appointments(db, actions.updateAppointment));
-  app.use("/api", interviewers(db));
+  app.use('/api', days(db));
+  app.use('/api', appointments(db, actions.updateAppointment));
+  app.use('/api', interviewers(db));
 
-  if (ENV === "development" || ENV === "test") {
+  if (ENV === 'development' || ENV === 'test') {
     Promise.all([
       read(path.resolve(__dirname, `db/schema/create.sql`)),
-      read(path.resolve(__dirname, `db/schema/${ENV}.sql`))
+      read(path.resolve(__dirname, `db/schema/${ENV}.sql`)),
     ])
       .then(([create, seed]) => {
-        app.get("/api/debug/reset", (request, response) => {
+        app.get('/api/debug/reset', (request, response) => {
           db.query(create)
             .then(() => db.query(seed))
             .then(() => {
-              console.log("Database Reset");
-              response.status(200).send("Database Reset");
+              console.log('Database Reset');
+              response.status(200).send('Database Reset');
             });
         });
       })
@@ -61,7 +61,15 @@ module.exports = function application(
       });
   }
 
-  app.close = function() {
+  if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../view/build')));
+
+    app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, '../view/build', 'index.html'));
+    });
+  }
+
+  app.close = function () {
     return db.end();
   };
 
