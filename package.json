@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "engines": {
-    "node": "12.22.11"
+    "node": "12.22.7"
   },
   "scripts": {
     "start": "NODE_TLS_REJECT_UNAUTHORIZED='0' node ./src/index.js",
